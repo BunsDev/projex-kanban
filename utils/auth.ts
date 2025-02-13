@@ -31,36 +31,36 @@ export const auth = {
     }
 
     // Step 2: Try to sign up the user
-    const { data, error: signUpError } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${location.origin}/auth/callback`,
-      },
-    });
+    // const { data, error: signUpError } = await supabase.auth.signUp({
+    //   email,
+    //   password,
+    //   options: {
+    //     emailRedirectTo: `${location.origin}/auth/callback`,
+    //   },
+    // });
 
     // If signup fails
-    if (signUpError) {
-      throw signUpError;
-    }
+    // if (signUpError) {
+    //   throw signUpError;
+    // }
 
     // If no user data, something went wrong
-    if (!data.user) {
-      throw new Error('Failed to create user account');
-    }
+    // if (!data.user) {
+    //   throw new Error('Failed to create user account');
+    // }
 
     // Step 3: Only proceed with profile creation for new signups
-    if (data.user.identities?.length === 0) {
-      try {
-        await users.captureUserDetails(data.user);
-      } catch (profileError) {
-        // If profile creation fails, clean up the auth user
-        await supabase.auth.admin.deleteUser(data.user.id);
-        throw profileError;
-      }
-    }
+    // if (data.user.identities?.length === 0) {
+    //   try {
+    //     await users.captureUserDetails(data.user);
+    //   } catch (profileError) {
+    //     // If profile creation fails, clean up the auth user
+    //     await supabase.auth.admin.deleteUser(data.user.id);
+    //     throw profileError;
+    //   }
+    // }
 
-    return data;
+    // return data;
   },
 
   // Email & Password Sign In

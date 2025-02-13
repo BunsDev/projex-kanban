@@ -4,8 +4,8 @@ import { NextResponse, type NextRequest } from 'next/server';
 // paths that don't require authentication
 const publicPaths = [
   '/', // Landing page
-  '/login', // Auth pages
-  '/create-account',
+  '/sign-in', // Auth pages
+  '/sign-up',
   '/forgot-password',
   '/auth/callback',
   '/auth/reset-password',
@@ -19,23 +19,23 @@ export async function updateSession(request: NextRequest) {
   });
 
   const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_URL ?? '',
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? '',
     {
       cookies: {
         getAll() {
           return request.cookies.getAll();
         },
         setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            request.cookies.set(name, value)
-          );
+          for (const { name, value, options } of cookiesToSet) {
+            request.cookies.set(name, value);
+          }
           supabaseResponse = NextResponse.next({
             request,
           });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          );
+          for (const { name, value, options } of cookiesToSet) {
+            supabaseResponse.cookies.set(name, value, options);
+          }
         },
       },
     }
@@ -47,7 +47,7 @@ export async function updateSession(request: NextRequest) {
 
   const currentPath = request.nextUrl.pathname;
   const nextPath =
-    currentPath === '/login' || currentPath === '/create-account'
+    currentPath === '/sign-in' || currentPath === '/sign-up'
       ? request.nextUrl.searchParams.get('next') || '/' // Default to landing page
       : currentPath;
 
@@ -60,16 +60,16 @@ export async function updateSession(request: NextRequest) {
   });
 
   if (!session && !isPublicPath) {
-    // no user, redirect to login page with current path as next
+    // no user, redirect to sign-in page with current path as next
     const url = request.nextUrl.clone();
-    url.pathname = '/login';
+    url.pathname = '/sign-in';
     url.searchParams.set('next', currentPath);
     return NextResponse.redirect(url);
   }
 
   if (
     session &&
-    (currentPath === '/login' || currentPath === '/create-account')
+    (currentPath === '/sign-in' || currentPath === '/sign-up')
   ) {
     // For logged in users trying to access auth pages, redirect to the next path
     const url = new URL(nextPath, request.url);

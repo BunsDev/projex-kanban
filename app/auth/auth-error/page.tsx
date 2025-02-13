@@ -37,7 +37,7 @@ export default async function AuthErrorPage({
         </CardContent>
         <CardFooter className="flex flex-col gap-2">
           <Button asChild className="w-full">
-            <Link href="/login">Return to Login</Link>
+            <Link href="/sign-in">Return to Login</Link>
           </Button>
           <Button asChild variant="outline" className="w-full">
             <Link href="/">Go to Home</Link>

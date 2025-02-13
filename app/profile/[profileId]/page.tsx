@@ -1,17 +1,18 @@
 import { users, type IUser } from '@/utils/users';
 import { createClient } from '@/utils/supabase/server';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { ProfileView } from './ProfileView';
+import { currentUser } from '@clerk/nextjs/server';
 
-async function getUser(profileId: string): Promise<IUser> {
-  try {
-    const user = await users.getUser(profileId);
-    if (!user) throw new Error('User not found');
-    return user;
-  } catch (error) {
-    notFound();
-  }
-}
+// async function getUser(profileId: string): Promise<IUser> {
+//   try {
+//     const user = await users.getUser(profileId);
+//     if (!user) throw new Error('User not found');
+//     return user;
+//   } catch (error) {
+//     notFound();
+//   }
+// }
 
 export default async function ProfileViewingPage({
   params,
@@ -20,12 +21,10 @@ export default async function ProfileViewingPage({
 }) {
   const { profileId } = await params;
 
-  const user = await getUser(profileId);
-  const supabase = await createClient();
-  const {
-    data: { user: currentUser },
-  } = await supabase.auth.getUser();
-  const isOwnProfile = currentUser?.id === user.id;
+  // const user = await getUser(profileId);
+  const user = await currentUser();
+  if (!user) redirect('/sign-in');
+  const isOwnProfile = user?.id === profileId;
 
   return <ProfileView user={user} isOwnProfile={isOwnProfile} />;
 }

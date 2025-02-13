@@ -2,6 +2,7 @@ import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import { SettingsLayout } from '../SettingsLayout';
 import { AccessContainer } from './AccessContainer';
+import { currentUser } from '@clerk/nextjs/server';
 
 interface Props {
   params: Promise<{ projectId: string }>;
@@ -10,18 +11,16 @@ interface Props {
 export default async function AccessPage({ params }: Props) {
   const { projectId } = await params;
   const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) redirect('/login');
+  const user = await currentUser();
+  
+  if (!user) redirect('/sign-in');
 
   // Load project details and members
   const [{ data: project }, { data: members }] = await Promise.all([
     supabase.from('projects').select('*').eq('id', projectId).single(),
     supabase
       .from('project_members')
-      .select(`*, user:users (id, name, email, avatar)`)
+      .select("*, user:users (id, name, email, avatar)")
       .eq('project_id', projectId),
   ]);
 

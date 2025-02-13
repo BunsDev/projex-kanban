@@ -18,10 +18,9 @@ import {
 import Link from 'next/link';
 import { Button } from './ui/button';
 import Image from 'next/image';
-import { auth } from '@/utils/auth';
 import { useRouter } from 'next/navigation';
 import { useToast } from './ui/use-toast';
-import type { User } from '@supabase/supabase-js';
+import type { User } from '@clerk/nextjs/server';
 
 interface UserMenuProps {
   user: User;
@@ -31,19 +30,19 @@ export function UserMenu({ user }: UserMenuProps) {
   const router = useRouter();
   const { toast } = useToast();
 
-  const handleSignOut = async () => {
-    try {
-      await auth.signOut();
-      router.push('/login');
-      router.refresh();
-    } catch (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Error',
-        description: 'Failed to sign out. Please try again.',
-      });
-    }
-  };
+  // const handleSignOut = async () => {
+  //   try {
+  //     await signOut();
+  //     router.push('/sign-in');
+  //     router.refresh();
+  //   } catch (error) {
+  //     toast({
+  //       variant: 'destructive',
+  //       title: 'Error',
+  //       description: 'Failed to sign out. Please try again.',
+  //     });
+  //   }
+  // };
 
   return (
     <DropdownMenu>
@@ -53,10 +52,10 @@ export function UserMenu({ user }: UserMenuProps) {
           size="icon"
           className="relative h-9 w-9 rounded-full border bg-background"
         >
-          {user.user_metadata.avatar_url ? (
+          {user.unsafeMetadata.avatar_url ? (
             <Image
-              src={user.user_metadata.avatar_url}
-              alt={user.email || ''}
+              src={user.unsafeMetadata.avatar_url as string}
+              alt={user.emailAddresses[0].emailAddress || ''}
               fill
               className="rounded-full object-cover"
               referrerPolicy="no-referrer"
@@ -72,10 +71,10 @@ export function UserMenu({ user }: UserMenuProps) {
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
             <p className="text-sm font-medium leading-none">
-              {user.user_metadata.full_name || user.email}
+              {user.firstName || user.emailAddresses[0].emailAddress}
             </p>
             <p className="text-xs leading-none text-muted-foreground">
-              {user.email}
+              {user.emailAddresses[0].emailAddress}
             </p>
           </div>
         </DropdownMenuLabel>
@@ -108,13 +107,13 @@ export function UserMenu({ user }: UserMenuProps) {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem
+        {/* <DropdownMenuItem
           className="cursor-pointer text-red-600 dark:text-red-400 focus:text-red-600 dark:focus:text-red-400"
           onSelect={handleSignOut}
         >
           <LogOut className="mr-2 h-4 w-4" />
           <span>Sign out</span>
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );

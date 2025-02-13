@@ -208,6 +208,13 @@ export const InviteUsers = ({
                     setSearchTerm(user.name);
                     setSearchResults([]);
                   }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      setSelectedUser(user);
+                      setSearchTerm(user.name);
+                      setSearchResults([]);
+                    }
+                  }}
                 >
                   {user.name}
                 </div>

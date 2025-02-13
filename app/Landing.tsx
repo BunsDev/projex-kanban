@@ -1,13 +1,12 @@
-'use client';
-import React from 'react';
+// 'use client';
+// 'use server';
+
+import type React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
-import { useTheme } from 'next-themes';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import { createClient } from '@/utils/supabase/client';
-import type { User } from '@supabase/supabase-js';
+import { auth, currentUser } from '@clerk/nextjs/server'
 
 const features = [
   'Intuitive Kanban boards',
@@ -16,30 +15,29 @@ const features = [
   'Advanced task tracking',
 ];
 
-const LandingPage: React.FC = () => {
-  const { resolvedTheme } = useTheme();
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const supabase = createClient();
+export default async function LandingPage() {
+  // const { resolvedTheme } = useTheme();
+  // const [user, setUser] = useState<User | null>(null);
+  // const [isLoading, setIsLoading] = useState(true);
+  // const supabase = createClient();
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setIsLoading(false);
-    });
+  /* CLERK DOCS */
+    // Get the userId from auth() -- if null, the user is not signed in
+    const { userId } = await auth()
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-    });
+    // Protect the route by checking if the user is signed in
+    if (!userId) {
+      return <div>Sign in to view this page</div>
+    }
 
-    return () => subscription.unsubscribe();
-  }, [supabase.auth]);
+    // Get the Backend API User object when you need access to the user's information
+    const user = await currentUser()
 
-  if (isLoading) {
-    return null; // or a loading spinner
-  }
+    console.log('userId', userId)
+  
+    // Use `user` to render user details or create UI elements
+    // return <div>Welcome, {user?.firstName}!</div>
+
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-background/95">
@@ -76,7 +74,7 @@ const LandingPage: React.FC = () => {
                   </Link>
                 </Button>
                 <Button size="lg" variant="outline" asChild>
-                  <Link href="/login">Sign in</Link>
+                  <Link href="/sign-in">Sign in</Link>
                 </Button>
               </>
             )}
@@ -97,18 +95,14 @@ const LandingPage: React.FC = () => {
           <div className="relative">
             <div className="relative bg-background/95 backdrop-blur rounded-lg shadow-2xl">
               <Image
-                src={
-                  resolvedTheme === 'dark'
-                    ? '/projex-dark.png'
-                    : '/projex-light.png'
-                }
+                src={'/projex-dark.png'}
                 alt="App preview"
                 width={1824}
                 height={1080}
                 className="rounded-lg w-full"
                 priority
               />
-              <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background"></div>
+              <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background" />
             </div>
           </div>
         </div>
@@ -116,13 +110,11 @@ const LandingPage: React.FC = () => {
 
       {/* Background Gradient Effect */}
       <div className="fixed inset-0 -z-10 h-full w-full bg-background">
-        <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-primary/5 to-background"></div>
+        <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-primary/5 to-background" />
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <div className="h-[40rem] w-[40rem] rounded-full bg-primary/5 blur-3xl"></div>
+          <div className="h-[40rem] w-[40rem] rounded-full bg-primary/5 blur-3xl" />
         </div>
       </div>
     </div>
   );
-};
-
-export default LandingPage;
+}

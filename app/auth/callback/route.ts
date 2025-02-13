@@ -8,28 +8,42 @@ export async function GET(request: Request) {
     const code = requestUrl.searchParams.get('code');
     const next = requestUrl.searchParams.get('next') || '/projects';
 
-    if (!code) {
-      console.error('No code provided in callback');
-      throw new Error('No code provided');
-    }
+    // if (!code) {
+    //   console.error('No code provided in callback');
+    //   throw new Error('No code provided');
+    // }
 
-    const supabase = await createClient();
-    const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+    // const supabase = await createClient();
+    // const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
-    if (error) {
-      console.error('Auth error:', error);
-      throw error;
-    }
+    // if (error) {
+    //   console.error('Auth error:', error);
+    //   // return the user to an error page with instructions (from supabase docs)
+    //   return NextResponse.redirect(`${origin}/auth/auth-code-error`)
+    //   // throw error;
+
+    // }
 
     // Capture user details after successful OAuth
-    if (data.user) {
-      try {
-        await users.captureUserDetails(data.user);
-      } catch (error) {
-        console.error('Error capturing user details:', error);
-        // Don't throw here - we still want to complete the auth flow
-      }
-    }
+    // if (data.user) {
+    //   try {
+    //     await users.captureUserDetails(data.user);
+    //   } catch (error) {
+    //     console.error('Error capturing user details:', error);
+    //     // Don't throw here - we still want to complete the auth flow
+    //   }
+    // }
+
+    //* https://supabase.com/docs/guides/auth/social-login/auth-google#application-code
+    // if (!error) {
+    //   const forwardedHost = request.headers.get('x-forwarded-host') // original origin before load balancer
+    //   const isLocalEnv = process.env.NODE_ENV === 'development'
+    //   // we can be sure that there is no load balancer in between, so no need to watch for X-Forwarded-Host
+    //   isLocalEnv ? NextResponse.redirect(`${origin}${next}`) : 
+    //   forwardedHost ? NextResponse.redirect(`https://${forwardedHost}${next}`) 
+    //     : NextResponse.redirect(`${origin}${next}`)
+    // }
+    // *
 
     // Redirect to the intended page
     return NextResponse.redirect(new URL(next, requestUrl.origin));

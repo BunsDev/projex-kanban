@@ -4,9 +4,9 @@ import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { canMoveTask, moveTaskDown, moveTaskUp } from '@/utils/move-task';
 import { tasks as tasksUtils } from '@/utils/tasks';
 import {
-  DragEndEvent,
-  DragOverEvent,
-  DragStartEvent,
+  type DragEndEvent,
+  type DragOverEvent,
+  type DragStartEvent,
   MouseSensor,
   PointerSensor,
   TouchSensor,
@@ -31,12 +31,12 @@ interface DragTaskContext {
   activePosition: number;
 }
 
-export const useBoardDragAndDrop = () => {
+export const useBoardDragAndDrop = async () => {
   const [overColumnId, setOverColumnId] = useState<string | null>(null);
   const [activeColumnId, setActiveColumnId] = useState<string | null>(null);
   const [activeTask, setActiveTask] = useState<ITaskWithOptions | null>(null);
   const [isUpdating, setIsUpdating] = useState(false);
-  const { user } = useCurrentUser();
+  const { user } = await useCurrentUser();
   const { createActivity } = useActivityQueries(activeTask?.id as string);
 
   const pointerSensor = useSensor(PointerSensor, {
@@ -219,6 +219,7 @@ export const useBoardDragAndDrop = () => {
   // Handle task movement between different columns with priority considerations
   const handleDifferentColumnDrag = async (context: DragTaskContext) => {
     const { tasks, setTasks, activeId, overColumnId, active, over } = context;
+    
     let newStatusPosition;
 
     const columnTasks = tasks.filter((task) => task.status_id === overColumnId);

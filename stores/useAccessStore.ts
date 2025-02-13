@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import { createClient } from '@/utils/supabase/client';
 import { ProjectAction } from '@/consts';
-
+// import { currentUser } from '@clerk/nextjs/server';
+import { useCurrentUser } from '@/hooks/useCurrentUser';
 interface AccessState {
   permissions: Record<string, Record<ProjectAction, boolean>>;
   roles: Record<string, Role>;
@@ -35,11 +36,8 @@ export const useAccessStore = create<AccessState>((set, get) => ({
 
   fetchProjectAccess: async (projectId) => {
     if (!projectId) return;
-
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-    if (!session) return;
+    const { user } = await useCurrentUser();
+    if (!user) return;
 
     // Get project details
     const { data: project } = await supabase
@@ -53,14 +51,14 @@ export const useAccessStore = create<AccessState>((set, get) => ({
       .from('project_members')
       .select('role')
       .eq('project_id', projectId)
-      .eq('user_id', session.user.id)
+      .eq('user_id', user.id)
       .maybeSingle();
 
     if (memberError) {
       console.error('Error fetching member role:', memberError);
     }
 
-    const isCreator = project?.created_by === session.user.id;
+    const isCreator = project?.created_by === user.id;
     const role = isCreator ? 'owner' : member?.role || 'read';
 
     // Define permissions based on role

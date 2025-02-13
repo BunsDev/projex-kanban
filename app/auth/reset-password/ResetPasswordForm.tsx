@@ -41,7 +41,7 @@ export function ResetPasswordForm() {
         title: 'Success',
         description: 'Your password has been reset.',
       });
-      router.push('/login');
+      router.push('/sign-in');
     } catch (error) {
       const authError = error as AuthError;
       toast({

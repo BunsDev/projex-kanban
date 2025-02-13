@@ -2,6 +2,7 @@ import { createClient } from '@/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import { ProjectSettingsForm } from './ProjectSettingsForm';
 import { SettingsLayout } from './SettingsLayout';
+import { getUser } from '@/utils/clerk/users';
 
 interface Props {
   params: Promise<{ projectId: string }>;
@@ -10,11 +11,8 @@ interface Props {
 export default async function SettingsPage({ params }: Props) {
   const { projectId } = await params;
   const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) redirect('/login');
+  const user = await getUser();
+  if (!user) redirect('/sign-in');
 
   const { data: project, error } = await supabase
     .from('projects')

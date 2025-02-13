@@ -1,4 +1,5 @@
 import { createClient } from '@/utils/supabase/server';
+import { currentUser } from '@clerk/nextjs/server';
 import { redirect } from 'next/navigation';
 import { notFound } from 'next/navigation';
 
@@ -11,13 +12,10 @@ export default async function InvitePage({ params, searchParams }: Props) {
   const supabase = await createClient();
   const { projectId } = await params;
   const { role } = await searchParams;
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
+  const user = await currentUser();
+  
   if (!user) {
-    redirect(`/login?next=/invites/${projectId}?role=${role}`);
+    redirect(`/sign-in?next=/invites/${projectId}?role=${role}`);
   }
 
   // Check if user has been invited

@@ -6,8 +6,9 @@ import Link from 'next/link';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import { useEffect, useState } from 'react';
-import { createClient } from '@/utils/supabase/client';
-import type { User } from '@supabase/supabase-js';
+// import { createClient } from '@/utils/supabase/client';
+import type { User } from '@clerk/nextjs/server';
+import { currentUser } from '@clerk/nextjs/server';
 import { usePathname } from 'next/navigation';
 import { useAccessStore } from '@/stores/useAccessStore';
 
@@ -15,8 +16,8 @@ interface HeaderProps {
   className?: string;
 }
 
-const supabase = createClient();
-
+// const supabase = createClient();
+// 
 export const Header = ({ className }: HeaderProps) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -25,22 +26,24 @@ export const Header = ({ className }: HeaderProps) => {
 
   useEffect(() => {
     // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setIsLoading(false);
-    });
+    // const getUser = async () => {
+    //   const user = await currentUser();
+    //   setUser(user);
+    //   setIsLoading(false);
+    // };
+    // getUser();
 
     // Listen for auth changes
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session) {
-        useAccessStore.getState().reset(); // Reset when session ends
-      }
-      setUser(session?.user ?? null);
-    });
+  //   const {
+  //     data: { subscription },
+  //   } = supabase.auth.onAuthStateChange((_event, session) => {
+  //     if (!se ssion) {
+  //       useAccessStore.getState().reset(); // Reset when session ends
+  //     }
+  //     setUser(session?.user ?? null);
+  //   });
 
-    return () => subscription.unsubscribe();
+  //   return () => subscription.unsubscribe();
   }, []);
 
   if (isLoading) {
@@ -70,10 +73,10 @@ export const Header = ({ className }: HeaderProps) => {
               {isLandingPage && (
                 <>
                   <Button variant="ghost" asChild>
-                    <Link href="/login">Sign in</Link>
+                    <Link href="/sign-in">Sign in</Link>
                   </Button>
                   <Button asChild>
-                    <Link href="/create-account">Get Started</Link>
+                    <Link href="/sign-up">Get Started</Link>
                   </Button>
                 </>
               )}

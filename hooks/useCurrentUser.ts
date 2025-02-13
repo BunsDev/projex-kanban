@@ -1,4 +1,5 @@
 import { createClient } from '@/utils/supabase/client';
+// import { currentUser } from '@clerk/nextjs/server';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
@@ -30,19 +31,22 @@ const fetchUserDetails = async (
   };
 };
 
-export const useCurrentUser = (): {
+export const useCurrentUser = async (): Promise<{
   user: Partial<IUser> | null | undefined;
   isLoading: boolean;
-} => {
+}> => {
   const [userId, setUserId] = useState<string>('');
   const [isAuthLoading, setIsAuthLoading] = useState(true);
+  // const user = await currentUser();
 
   useEffect(() => {
     // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUserId(session?.user?.id || '');
-      setIsAuthLoading(false);
-    });
+    // supabase.auth.getSession().then(({ data: { session } }) => {
+    //   setUserId(session?.user?.id || '');
+    //   setIsAuthLoading(false);
+    // });
+    setUserId(user?.id || '');
+    setIsAuthLoading(false);
   }, []);
 
   // Fetch user details using React Query

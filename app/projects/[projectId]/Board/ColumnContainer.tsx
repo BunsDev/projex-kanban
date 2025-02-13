@@ -7,12 +7,11 @@ import { ProjectAction } from '@/consts';
 import { cn } from '@/lib/utils';
 import { createClient } from '@/utils/supabase/client';
 import { tasks as taskUtils } from '@/utils/tasks';
-import { UniqueIdentifier } from '@dnd-kit/core';
+import type { UniqueIdentifier } from '@dnd-kit/core';
 import {
   SortableContext,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import { User } from '@supabase/supabase-js';
 import { Plus, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { ColumnLabelColor } from './ColumnLabelColor';
@@ -26,6 +25,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { currentUser, type User } from '@clerk/nextjs/server';
 
 interface Props {
   projectId: string;
@@ -70,11 +70,9 @@ export const ColumnContainer = ({
 
   useEffect(() => {
     const getUser = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-      setUser(session?.user || null);
-    };
+      const user = await currentUser();
+      setUser(user);
+    };  
     getUser();
   }, []);
 

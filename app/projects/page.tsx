@@ -1,20 +1,22 @@
-import { createClient } from '@/utils/supabase/server';
+// import { createClient } from '@/utils/supabase/server';
 import { users, type IUser } from '@/utils/users';
 import { AccountDetails } from './AccountDetails';
 import { Projects } from './Projects';
 import { redirect } from 'next/navigation';
 import { projects } from '@/utils/projects';
+import { currentUser } from '@clerk/nextjs/server';
 
 export default async function ProjectsPage() {
-  const supabase = await createClient();
+  // const supabase = await createClient();
+  const user = await currentUser();
+  // const {
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) redirect('/login');
+  //   data: { user },
+  // } = await supabase.auth.getUser();
+  if (!user) redirect('/sign-in');
 
   const userData = await users.getUser(user.id);
-  if (!userData) redirect('/login');
+  if (!userData) redirect('/sign-in');
 
   const userProjects = await projects.getUserProjects(user.id);
 

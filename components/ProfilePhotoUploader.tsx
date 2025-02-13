@@ -15,8 +15,8 @@ interface ProfilePhotoUploaderProps {
   className?: string;
 }
 
-const STORAGE_URL = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL;
-const BUCKET_NAME = 'profile_photos';
+// const STORAGE_URL = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_URL;
+// const BUCKET_NAME = process.env.NEXT_PUBLIC_SUPABASE_BUCKET_NAME ?? '';
 
 export const ProfilePhotoUploader: React.FC<ProfilePhotoUploaderProps> = ({
   currentPhotoUrl,
@@ -42,39 +42,39 @@ export const ProfilePhotoUploader: React.FC<ProfilePhotoUploaderProps> = ({
       return;
     }
 
-    try {
-      setIsUploading(true);
+  //   try {
+  //     setIsUploading(true);
 
-      // Create unique filename
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${crypto.randomUUID()}.${fileExt}`;
-      const filePath = `${fileName}`;
+  //     // Create unique filename
+  //     const fileExt = file.name.split('.').pop();
+  //     const fileName = `${crypto.randomUUID()}.${fileExt}`;
+  //     const filePath = `${fileName}`;
 
-      const { data, error } = await supabase.storage
-        .from(BUCKET_NAME)
-        .upload(filePath, file);
+  //     const { data, error } = await supabase.storage
+  //       .from(BUCKET_NAME)
+  //       .upload(filePath, file);
 
-      if (error) throw error;
+  //     if (error) throw error;
 
-      // Construct the full URL
-      const fullUrl = `${STORAGE_URL}/${BUCKET_NAME}/${data.path}`;
+  //     // Construct the full URL
+  //     const fullUrl = `${STORAGE_URL}/${BUCKET_NAME}/${data.path}`;
 
-      await onPhotoUploaded?.(fullUrl);
+  //     await onPhotoUploaded?.(fullUrl);
 
-      toast({
-        title: 'Success',
-        description: 'Profile photo updated successfully.',
-      });
-    } catch (error: any) {
-      console.error('Error uploading file:', error);
-      toast({
-        variant: 'destructive',
-        title: 'Error uploading file',
-        description: error.message,
-      });
-    } finally {
-      setIsUploading(false);
-    }
+  //     toast({
+  //       title: 'Success',
+  //       description: 'Profile photo updated successfully.',
+  //     });
+  //   } catch (error: any) {
+  //     console.error('Error uploading file:', error);
+  //     toast({
+  //       variant: 'destructive',
+  //       title: 'Error uploading file',
+  //       description: error.message,
+  //     });
+  //   } finally {
+  //     setIsUploading(false);
+  //   }
   };
 
   return (
@@ -85,7 +85,7 @@ export const ProfilePhotoUploader: React.FC<ProfilePhotoUploaderProps> = ({
       </Avatar>
 
       {/* Only show upload button for email users */}
-      {userProvider === 'email' && (
+      {/* {userProvider === 'email' && (
         <>
           <Button
             className={cn(
@@ -109,7 +109,7 @@ export const ProfilePhotoUploader: React.FC<ProfilePhotoUploaderProps> = ({
             onChange={handleFileSelect}
           />
         </>
-      )}
+      )} */}
       {/* Show provider badge for OAuth users */}
       {userProvider !== 'email' && (
         <div className="absolute bottom-2 right-2 bg-muted/80 px-2 py-1 rounded-md text-xs">

@@ -21,7 +21,9 @@ function OAuthButtons({ isLoading, onLoadingChange, redirectUrl }: Props) {
   const searchParams = useSearchParams();
 
   // Use either provided redirectUrl or next param from URL
-  const nextUrl = redirectUrl || searchParams.get('next') || '/projects';
+  const nextUrl = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL
+    ? process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URL
+    : redirectUrl || searchParams.get('next') || '/projects';
 
   // Use either parent loading state or internal state
   const loading = isLoading ?? internalLoading;

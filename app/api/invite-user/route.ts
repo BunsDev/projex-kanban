@@ -11,7 +11,7 @@ export async function POST(request: Request) {
       await request.json();
 
     const { data, error } = await resend.emails.send({
-      from: 'ProjeX <noreply@mrshadrack.com>',
+      from: 'Buns <buns@dedevs.club>',
       to,
       subject: 'Invitation to join a project',
       react: InviteUserEmail({
