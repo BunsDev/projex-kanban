@@ -5,8 +5,7 @@
           "noNonNullAssertion": "off"
         },
         "suspicious": {
-          "noExplicitAny": "off",
-          "noImplicitAny": "off"
+          "noExplicitAny": "off"
         },
         "performance": {
           "noAccumulatingSpread": "off"
