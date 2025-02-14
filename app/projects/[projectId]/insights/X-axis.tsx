@@ -1,3 +1,4 @@
+import type * as React from 'react';
 import {
   Select,
   SelectContent,
@@ -11,7 +12,7 @@ import { SquareChevronDown, Tag } from 'lucide-react';
 export const XAxisOptions: {
   value: CustomField;
   label: string;
-  icon: JSX.Element;
+  icon: React.ReactNode;
 }[] = [
   {
     value: 'status',

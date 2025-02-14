@@ -1,0 +1,24 @@
+{
+    "linter": {
+      "rules": {
+        "a11y": {
+          "noNoninteractiveTabindex": "off"
+        },
+        "correctness": {
+          "useExhaustiveDependencies": "off"
+        },
+        "complexity": {
+          "noStaticOnlyClass": "off"
+        },
+        "suspicious": {
+          "noExplicitAny": "off",
+          "noArrayIndexKey": "off"
+        },
+        "style": {
+          "noNonNullAssertion": "off",
+          "noCommaOperator": "off",
+          "noUnusedTemplateLiteral": "off"
+        }
+      }
+    }
+  }

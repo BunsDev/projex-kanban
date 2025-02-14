@@ -208,6 +208,14 @@ export const InviteUsers = ({
                     setSearchTerm(user.name);
                     setSearchResults([]);
                   }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      setSelectedUser(user);
+                      setSearchTerm(user.name);
+                      setSearchResults([]);
+                    }
+                  }}
+                  tabIndex={0}
                 >
                   {user.name}
                 </div>
@@ -217,6 +225,7 @@ export const InviteUsers = ({
         </div>
         <RoleSelect value={role} onValueChange={setRole} />
         <Button
+          type="button"
           onClick={handleInvite}
           className={cn(successBtnStyles, 'px-3')}
           disabled={!selectedUser || isInviting}

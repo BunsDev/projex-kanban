@@ -18,14 +18,14 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 const navigationItems: (
   | 'separator'
   | {
       label: string;
       link: string;
-      icon: JSX.Element;
+      icon: React.ReactNode;
       minRole?: Role;
     }
 )[] = [

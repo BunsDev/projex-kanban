@@ -1,3 +1,4 @@
+import type React from 'react';
 import {
   Select,
   SelectContent,
@@ -11,7 +12,7 @@ import { SquareChevronDown, Tag } from 'lucide-react';
 export const GroupByOptions: {
   value: CustomField | 'none';
   label: string;
-  icon: JSX.Element;
+  icon: React.ReactNode;
 }[] = [
   {
     value: 'none',
@@ -58,13 +59,11 @@ export const GroupBy = () => {
             (option) =>
               option.value !== xAxis && (
                 <SelectItem value={option.value} key={option.value}>
-                  <div className="flex">
-                    {option.icon}
-                    <span>{option.label}</span>
-                  </div>
+                  {option.icon}
+                  {option.label}
                 </SelectItem>
               )
-          )}
+            )}
         </SelectContent>
       </Select>
     </div>

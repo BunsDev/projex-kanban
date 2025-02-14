@@ -10,7 +10,7 @@ export const useProjectQueries = (projectId: string) => {
     queryKey: ['project-tasks', projectId],
     queryFn: () => tasks.board.getProjectTasks(projectId),
     enabled: !!projectId,
-    staleTime: Infinity, // Never consider data stale automatically
+    staleTime: Number.POSITIVE_INFINITY, // Never consider data stale automatically
     gcTime: 1000 * 60 * 30,
   });
 
@@ -19,7 +19,7 @@ export const useProjectQueries = (projectId: string) => {
     queryKey: ['project-members', projectId],
     queryFn: () => projects.members.getAll(projectId),
     enabled: !!projectId,
-    staleTime: Infinity,
+    staleTime: Number.POSITIVE_INFINITY,
     gcTime: 1000 * 60 * 30,
   });
 
@@ -28,7 +28,7 @@ export const useProjectQueries = (projectId: string) => {
     queryKey: ['project-labels', projectId],
     queryFn: () => projects.fields.getLabels(projectId),
     enabled: !!projectId,
-    staleTime: Infinity,
+    staleTime: Number.POSITIVE_INFINITY,
     gcTime: 1000 * 60 * 30,
   });
 
@@ -37,7 +37,7 @@ export const useProjectQueries = (projectId: string) => {
     queryKey: ['project-statuses', projectId],
     queryFn: () => projects.fields.getStatuses(projectId),
     enabled: !!projectId,
-    staleTime: Infinity,
+    staleTime: Number.POSITIVE_INFINITY,
     gcTime: 1000 * 60 * 30,
   });
 
@@ -46,7 +46,7 @@ export const useProjectQueries = (projectId: string) => {
     queryKey: ['project-priorities', projectId],
     queryFn: () => projects.fields.getPriorities(projectId),
     enabled: !!projectId,
-    staleTime: Infinity,
+    staleTime: Number.POSITIVE_INFINITY,
     gcTime: 1000 * 60 * 30,
   });
 
@@ -55,7 +55,7 @@ export const useProjectQueries = (projectId: string) => {
     queryKey: ['project-sizes', projectId],
     queryFn: () => projects.fields.getSizes(projectId),
     enabled: !!projectId,
-    staleTime: Infinity,
+    staleTime: Number.POSITIVE_INFINITY,
     gcTime: 1000 * 60 * 30,
   });
 

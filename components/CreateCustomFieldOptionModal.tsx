@@ -1,4 +1,5 @@
 'use client';
+import React, { type ReactElement } from 'react';
 import { secondaryBtnStyles, successBtnStyles } from '@/app/commonStyles';
 import { Button } from '@/components/ui/button';
 import {
@@ -11,7 +12,6 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { useModalDialog } from '@/hooks/useModalDialog';
 import { cn } from '@/lib/utils';
-import React, { ReactElement } from 'react';
 import { CustomOptionForm } from './CustomOptionForm';
 import { ProjectAction } from '@/consts';
 import { useProjectAccess } from '@/hooks/useProjectAccess';
@@ -49,6 +49,7 @@ export const CreateCustomFieldOptionModal = ({
     >
       <DialogTrigger asChild>
         {triggerBtn ? (
+          // @ts-ignore
           React.cloneElement(triggerBtn, { onClick: openModal })
         ) : can?.(ProjectAction.UPDATE_OPTIONS) ? (
           <Button className={cn(successBtnStyles)} onClick={openModal}>

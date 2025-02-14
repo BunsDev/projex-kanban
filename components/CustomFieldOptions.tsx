@@ -12,9 +12,9 @@ import { cn } from '@/lib/utils';
 import {
   closestCenter,
   DndContext,
-  DragEndEvent,
+  type DragEndEvent,
   DragOverlay,
-  DragStartEvent,
+  type DragStartEvent,
 } from '@dnd-kit/core';
 import {
   arrayMove,
@@ -26,9 +26,10 @@ import { CSS } from '@dnd-kit/utilities';
 import { Ellipsis, GripVertical } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import {
-  Dispatch,
-  ReactNode,
-  SetStateAction,
+  type Dispatch,
+  type FC,
+  type ReactNode,
+  type SetStateAction,
   useEffect,
   useState,
 } from 'react';
