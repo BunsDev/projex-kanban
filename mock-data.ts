@@ -1,10 +1,10 @@
 export const users: IUser[] = [
   {
     id: 'user-1',
-    email: 'john.doe@example.com',
-    name: 'John Doe',
-    description: 'Project Manager',
-    avatar: 'https://example.com/avatar1.jpg',
+    email: 'bunsthedev@gmail.com',
+    name: 'Buns',
+    description: 'HBIC',
+    avatar: 'https://x.com/0xBuns/photo',
     created_at: new Date('2023-01-01T00:00:00Z'),
     updated_at: new Date('2023-01-01T00:00:00Z'),
     links: [

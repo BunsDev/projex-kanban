@@ -1,3 +1,6 @@
+'use client';
+
+import React from 'react';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -10,7 +13,7 @@ const fontSans = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'ProjeX',
+  title: 'Dekaban',
   description: 'Project Management App',
 };
 

@@ -138,7 +138,8 @@ interface ITimeline {
   value: ActivityResponse | CommentResponse;
 }
 
-type CustomFieldDBTableName = 'statuses' | 'labels' | 'priorities' | 'sizes';
+type CustomFieldDBTableName = 
+  'statuses' | 'labels' | 'priorities' | 'sizes';
 
 // ------------------------------
 interface ICustomFieldData {
