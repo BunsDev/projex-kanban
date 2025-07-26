@@ -6,7 +6,13 @@ import { useParams } from 'next/navigation';
 export const Participants = () => {
   const { projectId } = useParams();
   const { members } = useProjectQueries(projectId as string);
-  const { owner } = useProjectOwner(projectId as string);
+  const { owner } = useProjectOwner(projectId as string) ?? {
+    id: '',
+    name: '',
+    avatar: '',
+    description: '',
+    links: [],
+  };
 
   return (
     <>
@@ -18,18 +24,18 @@ export const Participants = () => {
           id={owner?.id || ''}
           name={owner?.name || ''}
           avatarUrl={owner?.avatar || ''}
-          description={owner?.description}
-          links={owner?.links}
+          description={owner?.description || ''}
+          links={owner?.links || []}
           showPreviewName={false}
         />
         {members?.map((member) => (
           <UserCard
-            key={member.id}
-            id={member.id}
-            name={member.name || ''}
-            avatarUrl={member.avatar || ''}
-            description={member.description}
-            links={member.links}
+            key={member?.id || ''}
+            id={member?.id || ''}
+            name={member?.name || ''}
+            avatarUrl={member?.avatar || ''}
+            description={member?.description || ''}
+            links={member?.links || []}
             showPreviewName={false}
           />
         ))}

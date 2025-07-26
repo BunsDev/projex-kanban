@@ -3,7 +3,7 @@ import { LabelBadge } from '@/components/LabelBadge';
 import { UserCard } from '@/components/UserCard';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { FC } from 'react';
+import type { FC } from 'react';
 
 // Helper components for each activity type
 const User = ({ user }: { user?: Partial<IUser> }) => {
@@ -13,11 +13,11 @@ const User = ({ user }: { user?: Partial<IUser> }) => {
 
   return (
     <UserCard
-      id={user.id as string}
-      name={user.name as string}
-      avatarUrl={user.avatar as string}
-      description={user.description as string}
-      links={user.links}
+      id={user?.id as string}
+      name={user?.name as string}
+      avatarUrl={user?.avatar as string}
+      description={user?.description as string}
+      links={user?.links}
       avatarStyles="w-4 h-4"
     />
   );

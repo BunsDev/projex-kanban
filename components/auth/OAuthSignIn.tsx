@@ -27,7 +27,9 @@ function OAuthButtons({ isLoading, onLoadingChange, redirectUrl }: Props) {
   const loading = isLoading ?? internalLoading;
   const setLoading = onLoadingChange ?? setInternalLoading;
 
-  const handleOAuthSignIn = async (provider: 'github' | 'google') => {
+  const handleOAuthSignIn = async (
+    provider: 'github' | 'google' = 'github'
+  ) => {
     try {
       setLoading(true);
       await auth.signInWithOAuth(provider, nextUrl);

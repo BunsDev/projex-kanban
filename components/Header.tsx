@@ -59,7 +59,7 @@ export const Header = ({ className }: HeaderProps) => {
           href={user ? '/projects' : '/'}
           className="flex items-center space-x-2 font-bold text-xl hover:text-primary transition-colors"
         >
-          ProjeX
+          Dekaban
         </Link>
 
         <div className="flex items-center gap-4">

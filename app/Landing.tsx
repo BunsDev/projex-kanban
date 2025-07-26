@@ -1,5 +1,6 @@
 'use client';
-import React from 'react';
+
+import type React from 'react';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
@@ -108,7 +109,7 @@ const LandingPage: React.FC = () => {
                 className="rounded-lg w-full"
                 priority
               />
-              <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background"></div>
+              <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background" />
             </div>
           </div>
         </div>
@@ -116,9 +117,9 @@ const LandingPage: React.FC = () => {
 
       {/* Background Gradient Effect */}
       <div className="fixed inset-0 -z-10 h-full w-full bg-background">
-        <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-primary/5 to-background"></div>
+        <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 via-primary/5 to-background" />
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-          <div className="h-[40rem] w-[40rem] rounded-full bg-primary/5 blur-3xl"></div>
+          <div className="h-[40rem] w-[40rem] rounded-full bg-primary/5 blur-3xl" />
         </div>
       </div>
     </div>

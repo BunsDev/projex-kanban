@@ -1,4 +1,4 @@
-import React, { FC, memo } from 'react';
+import React, { type FC, memo } from 'react';
 import {
   HoverCard,
   HoverCardContent,
@@ -40,11 +40,15 @@ UserLink.displayName = 'UserLink';
 
 // Memoized card content to prevent re-renders
 const UserCardContent = memo(
-  ({ name, avatarUrl, description, links, id }: Props) => (
+  ({ name, avatarUrl, description, links, id, avatarStyles }: Props) => (
     <div>
       <div className="flex items-center gap-2">
         <Link href={`/profile/${id}`}>
-          <UserAvatar src={avatarUrl} fallback={name.charAt(0)} />
+          <UserAvatar
+            src={avatarUrl}
+            fallback={name.charAt(0)}
+            className={cn('w-6 h-6', avatarStyles)}
+          />
         </Link>
         <p className="text-bold py-2 text-lg">{name}</p>
       </div>

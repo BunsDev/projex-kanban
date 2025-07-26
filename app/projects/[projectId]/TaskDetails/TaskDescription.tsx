@@ -47,8 +47,8 @@ export const TaskDescription = () => {
             id={selectedTask?.creator?.id!}
             name={selectedTask?.creator?.name || ''}
             avatarUrl={selectedTask?.creator?.avatar || ''}
-            description={task?.creator?.description}
-            links={task?.creator?.links}
+            description={selectedTask?.creator?.description || ''}
+            links={selectedTask?.creator?.links || []}
           />
           <span className="text-gray-500 text-xs">
             opened {formatRelativeTime(task?.created_at!)}

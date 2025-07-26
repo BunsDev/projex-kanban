@@ -74,6 +74,7 @@ export const projects = {
 
         return project;
       } catch (error) {
+        console.error('Error creating project:', error);
         throw error;
       }
     },

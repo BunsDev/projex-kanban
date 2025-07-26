@@ -48,6 +48,7 @@ export function CreateAccountForm() {
       });
       router.push('/login');
     } catch (error) {
+      console.log('error', error);
       const { message } = getAuthError(error);
 
       toast({

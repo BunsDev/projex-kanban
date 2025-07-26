@@ -74,8 +74,8 @@ export const AccountDetails = ({ initialData }: AccountDetailsProps) => {
   const updateLink = (index: number, field: 'label' | 'url', value: string) => {
     setFormData((prev) => ({
       ...prev,
-      links: prev.links.map((link, index) =>
-        index === index ? { ...link, [field]: value } : link
+      links: prev.links.map((link, i) =>
+        i === index ? { ...link, [field]: value } : link
       ),
     }));
   };
@@ -95,8 +95,11 @@ export const AccountDetails = ({ initialData }: AccountDetailsProps) => {
       {isEditing ? (
         <div className="space-y-4 mt-4">
           <div>
-            <label className="text-sm font-medium">Name</label>
+            <label htmlFor="name" className="text-sm font-medium">
+              Name
+            </label>
             <Input
+              id="name"
               value={formData.name}
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, name: e.target.value }))
@@ -106,8 +109,11 @@ export const AccountDetails = ({ initialData }: AccountDetailsProps) => {
           </div>
 
           <div>
-            <label className="text-sm font-medium">Bio</label>
+            <label htmlFor="description" className="text-sm font-medium">
+              Bio
+            </label>
             <Textarea
+              id="description"
               value={formData.description}
               onChange={(e) =>
                 setFormData((prev) => ({
@@ -121,7 +127,9 @@ export const AccountDetails = ({ initialData }: AccountDetailsProps) => {
           </div>
 
           <div>
-            <label className="text-sm font-medium">Links</label>
+            <label htmlFor="links" className="text-sm font-medium">
+              Links
+            </label>
             {formData.links.map((link, index) => (
               <div key={index} className="flex gap-2 mt-2">
                 <Input

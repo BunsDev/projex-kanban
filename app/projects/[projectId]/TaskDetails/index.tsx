@@ -64,7 +64,7 @@ const CommentForm = () => {
           avatarStyles="w-7 h-7"
           showPreviewName={false}
         />
-        <span className="font-bold">Add a comment</span>
+        <span className="font-bold">Add Comment</span>
       </div>
       <TextEditor
         content={comment}

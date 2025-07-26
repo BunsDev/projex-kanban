@@ -11,20 +11,19 @@ function getTasksByStatusGroupedByField<T extends IField>(
   noFieldLabel: string
 ): IStatusGroupedByField[] {
   const statusMap = new Map<string, IStatusGroupedByField>();
-
   // Initialize status map with fields
-  statuses.forEach((status) => {
+  for (const status of statuses) {
     const fieldCounts: { [field: string]: number } = {};
-    fields.forEach((field) => {
+    for (const field of fields) {
       fieldCounts[field.label] = 0;
-    });
+    }
     fieldCounts[noFieldLabel] = 0;
 
     statusMap.set(status.id, { name: status.label, ...fieldCounts });
-  });
+  }
 
   // Count tasks based on status and fields
-  tasks.forEach((task) => {
+  for (const task of tasks) {
     const statusEntry = statusMap.get(task.status_id);
     if (statusEntry) {
       const taskField = task[fieldKey] as unknown as string[];
@@ -32,12 +31,12 @@ function getTasksByStatusGroupedByField<T extends IField>(
         (statusEntry[noFieldLabel] as number) += 1;
       } else {
         if (Array.isArray(taskField)) {
-          taskField.forEach((fieldId) => {
+          for (const fieldId of taskField) {
             const field = fields.find((f) => f.id === fieldId);
             if (field) {
               (statusEntry[field.label] as number) += 1;
             }
-          });
+          }
         } else {
           const field = fields.find((f) => f.id === taskField);
           if (field) {
@@ -46,15 +45,15 @@ function getTasksByStatusGroupedByField<T extends IField>(
         }
       }
     }
-  });
+  }
 
   // Convert status map to array
   const result: IStatusGroupedByField[] = [];
-  statusMap.forEach((value) => {
+  for (const value of statusMap.values()) {
     // Ensure the noFieldLabel is the last item
     const { [noFieldLabel]: noField, ...rest } = value;
     result.push({ ...rest, [noFieldLabel]: noField } as IStatusGroupedByField);
-  });
+  }
 
   return result;
 }

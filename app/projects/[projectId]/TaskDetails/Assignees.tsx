@@ -224,18 +224,24 @@ export const Assignees = () => {
             <Separator className="my-2" />
             {filteredMembers?.map((member) => (
               <div
-                key={member.id}
+                key={member?.id || ''}
                 className="flex items-center hover:cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-900 p-1 text-xs"
-                onClick={() => handleAssigneeToggle(member.id || '')}
+                onClick={() => handleAssigneeToggle(member?.id || '')}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    handleAssigneeToggle(member?.id || '');
+                  }
+                }}
+                tabIndex={0}
               >
                 <Checkbox
                   checked={isAssigned(member.id || '')}
                   className="w-4 h-4 mr-4 rounded-sm bg-gray-200 dark:bg-black border border-gray-300 dark:border-gray-900"
                 />
                 <Avatar className="w-4 h-4 mr-2">
-                  <AvatarImage src={member.avatar} />
+                  <AvatarImage src={member?.avatar || ''} />
                   <AvatarFallback>
-                    {member.name?.charAt(0) || ''}
+                    {member?.name?.charAt(0) || ''}
                   </AvatarFallback>
                 </Avatar>
                 <span>{member.name}</span>
@@ -249,12 +255,12 @@ export const Assignees = () => {
           <div className="flex flex-col gap-2">
             {task.assignees.map((assignee) => (
               <UserCard
-                key={assignee.id}
-                id={assignee.id}
-                name={assignee.name}
-                avatarUrl={assignee.avatar}
-                description={assignee.description}
-                links={assignee.links}
+                key={assignee?.id || ''}
+                id={assignee?.id || ''}
+                name={assignee?.name || ''}
+                avatarUrl={assignee?.avatar || ''}
+                description={assignee?.description || ''}
+                links={assignee?.links || []}
               />
             ))}
           </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { ChartConfig } from '@/components/ui/chart';
+import type { ChartConfig } from '@/components/ui/chart';
 import { useInsightsContext } from '@/contexts/insightsContext';
 import { BarChart } from './Charts/Bar';
 import { ColumnChart } from './Charts/Column';

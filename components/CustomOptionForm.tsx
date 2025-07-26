@@ -3,7 +3,7 @@ import { successBtnStyles } from '@/app/commonStyles';
 import { customFieldsColors } from '@/consts/colors';
 import { getCustomFieldTagColorsForTheme } from '@/lib/helpers';
 import { useTheme } from 'next-themes';
-import { ReactNode, useState } from 'react';
+import { type ReactNode, useState } from 'react';
 import { ColorSelect } from './ColorSelect';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
