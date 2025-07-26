@@ -13,26 +13,25 @@ function getTasksByLabelGroupedByField<T extends IField>(
   const labelMap = new Map<string, ILabelGroupedByField>();
 
   // Initialize label map with fields
-  labels.forEach((label) => {
+  for (const label of labels) {
     const fieldCounts: { [field: string]: number } = {};
-    fields.forEach((field) => {
+    for (const field of fields) {
       fieldCounts[field.label] = 0;
-    });
+    }
     fieldCounts[noFieldLabel] = 0;
-
     labelMap.set(label.id, { name: label.label, ...fieldCounts });
-  });
+  }
 
   // Count tasks based on labels and fields
-  tasks.forEach((task) => {
+  for (const task of tasks) {
     if (task.labels.length === 0) {
       // Handle tasks with no labels
       const noLabelEntry = labelMap.get('No label');
       if (!noLabelEntry) {
         const fieldCounts: { [field: string]: number } = {};
-        fields.forEach((field) => {
+        for (const field of fields) {
           fieldCounts[field.label] = 0;
-        });
+        }
         fieldCounts[noFieldLabel] = 1;
         labelMap.set('No label', { name: 'No label', ...fieldCounts });
       } else {
@@ -40,7 +39,7 @@ function getTasksByLabelGroupedByField<T extends IField>(
       }
     } else {
       // Handle tasks with labels
-      task.labels.forEach((labelId) => {
+      for (const labelId of task.labels) {
         const labelEntry = labelMap.get(labelId);
         if (labelEntry) {
           const taskField = task[fieldKey] as unknown as string;
@@ -53,17 +52,16 @@ function getTasksByLabelGroupedByField<T extends IField>(
             }
           }
         }
-      });
+      }
     }
-  });
+  }
 
   // Convert label map to array
   const result: ILabelGroupedByField[] = [];
-  labelMap.forEach((value) => {
-    // Ensure the noFieldLabel is the last item
+  for (const [, value] of labelMap) {
     const { [noFieldLabel]: noField, ...rest } = value;
     result.push({ ...rest, [noFieldLabel]: noField } as ILabelGroupedByField);
-  });
+  }
 
   return result;
 }

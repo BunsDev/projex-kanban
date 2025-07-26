@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { InviteUsers } from './InviteUsers';
+// import { InviteUsers } from './InviteUsers';
 import { ManageAccess } from './ManageAccess';
 
 interface MemberWithUser extends IProjectMember {
@@ -19,7 +19,7 @@ interface Props {
 
 export const AccessContainer = ({
   projectId,
-  projectName,
+  // projectName,
   initialMembers,
   currentUserId,
   currentUserRole,
@@ -41,13 +41,13 @@ export const AccessContainer = ({
       <div className="p-4 rounded-sm bg-muted dark:bg-muted/50 text-sm">
         Only those with access to this project can view it.
       </div>
-      <InviteUsers
+      {/* <InviteUsers
         projectName={projectName}
         projectId={projectId}
         onMemberAdded={handleMemberAdded}
         currentUserRole={currentRole}
         createdBy={createdBy}
-      />
+      /> */}
       <ManageAccess
         projectId={projectId}
         members={members}
